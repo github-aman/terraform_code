@@ -1,0 +1,21 @@
+---
+
+## Create the redis cluster using master-slave configuration ##
+
+  - name: Creating the redis cluster !!
+    command: "/usr/local/bin/redis-cli --cluster create {{ bind_ip_address }}:6379 {{ bind_ip_address }}:6380 {{ bind_ip_address }}:6381 {{ bind_ip_address }}:6382 {{ bind_ip_address }}:6383 {{ bind_ip_address }}:6384 --cluster-replicas 1"
+    args: 
+      chdir: "{{ redis_directory }}"
+#    responses: 
+#      Question: Can I set the above configuration? (type 'yes' to accept)
+#        - yes
+    tags: redis_cluster
+
+  - name: Check the fully created cluster nodes info !!
+    command: "/usr/local/bin/redis-cli -p 6379 cluster info"
+    register: out_display
+ 
+  - name: Display cluster output !!
+    debug: 
+      var: out_display.stdout_lines
+    

@@ -1,0 +1,10 @@
+---
+#- hosts: centos3_supervisor
+#  become: true
+#  roles:
+#    - supervisord
+ 
+- hosts: tag_Name_redis_*:tag_Name_redis_master*:tag_Name_redis_slave*
+  become: true
+  roles:
+    - redis_cluster 
